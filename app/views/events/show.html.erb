@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<p>Current user attends: <%= user_attends %></p>
+
+<p>Attendees count: <%= attendees_count %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Date time:</strong>
+  <%= @event.date_time %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @event.address %>
+</p>
+
+<br />
+
+<%= form_for [@event, Comment.new] do |f| %>
+  <p>
+    <%= f.label :body, "New comment" %><br/>
+    <%= f.text_area :body %>
+  </p>
+  <p><%= f.submit "Add comment" %></p>
+<% end %>
+
+<br />
+
+<h2>Comments</h2>
+<div id="comments">
+  <%= render partial: @event.comments %>
+</div>
+
+<div>
+  <% if attends? %>
+    <%= link_to "Leave", event_attendee_path(@event), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% else %>
+    <%= link_to "Attend", event_attendees_path(@event), method: :post, data: { confirm: 'Are you sure want to go?' } %>
+  <% end %>
+</div>>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
