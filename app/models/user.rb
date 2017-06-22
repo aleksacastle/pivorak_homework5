@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :events, through: :attendees
 
   def is_admin?
-    User.joins(:admin).where(id: self.id).present?
+    return @is_admin if defined?(@is_admin)
+
+    @is_admin ||= User.joins(:admin).where(id: self.id).exist?
   end
 end
